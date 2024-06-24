@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import setAccount from "../screens/Account";
+import SetAccount from "../screens/Account";
 import About from "../screens/About";
 
 const SettingsDrawer = createDrawerNavigator();
@@ -15,7 +15,7 @@ const SettingsDrawerNavigation = () => {
           title: "Аккаунт",
         }}
         name="UserMainInfo"
-        component={setAccount}
+        component={SetAccount}
       />
       <SettingsDrawer.Screen
         options={{

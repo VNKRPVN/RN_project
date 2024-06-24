@@ -4,17 +4,32 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { Vibration } from 'react-native';
 
 const FoodInput = ({ onAddFood }) => {
     const [inputValue, setInputValue] = useState("");
+    const [buttonStyle, setButtonStyle] = useState(styles.searchButton);
 
     const handleAddFood = () => {
-        if (inputValue.trim()) {
+      if (!inputValue.trim()) {
+        // Для веб изменяем цвет кнопки, для мобильных - вибрация
+        if (Platform.OS === 'web') {
+          setButtonStyle(styles.searchButtonError);
+          setTimeout(() => setButtonStyle(styles.searchButton), 500);
+        } else {
+          Vibration.vibrate([0, 100, 100, 100]);
+        }
+        // alert("Пожалуйста, введите название продукта.");
+      } else {
         onAddFood(inputValue.trim());
         setInputValue("");
+        if (Platform.OS === 'web') {
+          setButtonStyle(styles.searchButton);
         }
+      }
     };
 
     return (
@@ -26,7 +41,7 @@ const FoodInput = ({ onAddFood }) => {
             value={inputValue}
             onChangeText={setInputValue}
         />
-        <TouchableOpacity style={styles.searchButton} onPress={handleAddFood}>
+        <TouchableOpacity style={buttonStyle} onPress={handleAddFood}>
             <AntDesign name="plus" size={30} color="black" />
         </TouchableOpacity>
         </View>
@@ -50,6 +65,13 @@ const FoodInput = ({ onAddFood }) => {
     },
     searchButton: {
       backgroundColor: "#ffd43b",
+      padding: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 10,
+    },
+    searchButtonError: {
+      backgroundColor: '#c2255c', // цвет для ошибки
       padding: 10,
       justifyContent: "center",
       alignItems: "center",

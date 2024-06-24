@@ -7,13 +7,13 @@ import {
   View,
 } from "react-native";
 import { useContext } from "react";
-import { AccountContext } from "../../App";
+import { AccountContext } from "../data/accountContext";
 
-const setAccount = () => {
-  const { account, setAccount } = useContext(AccountContext);
+const SetAccount = () => {
+  const { account, SetAccount } = useContext(AccountContext);
 
   const logout = () => {
-    setAccount(null);
+    SetAccount(null);
   };
 
   return (
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   accountPhoto: {
     width: 250,
     height: 250,
-    borderRadius: "100%",
+    borderRadius: 10,
   },
   text: {
     fontSize: 17,
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default setAccount;
+export default SetAccount;

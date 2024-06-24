@@ -1,12 +1,30 @@
-import {StyleSheet, TextInput, TouchableOpacity, View, Image} from "react-native";
-import {forwardRef, useImperativeHandle, useRef} from "react";
+import {StyleSheet, TextInput, TouchableOpacity, View, Image, Platform} from "react-native";
+import {forwardRef, useImperativeHandle, useRef, useState} from "react";
+import { Vibration } from 'react-native';
 
 const SearchInput = ({
     value,
     onChangeSearchStr,
     onSearch
     }, ref) => {
-    const inputRef = useRef()
+    const inputRef = useRef();
+    const [buttonStyle, setButtonStyle] = useState(styles.searchButton);
+
+
+    const handleSearch = () => {
+        if (!value.trim()) {
+            if (Platform.OS === 'android') {
+                Vibration.vibrate([0, 100, 100, 100]);
+                onSearch();
+              } else {
+                setButtonStyle(styles.searchButtonError);
+                setTimeout(() => setButtonStyle(styles.searchButton), 500);
+                onSearch();
+              }
+        } else {
+          onSearch();
+        }
+      };
 
     useImperativeHandle(ref, () => ({
         focus: () => inputRef.current.focus()
@@ -22,7 +40,7 @@ const SearchInput = ({
                 ref={inputRef}
                 onChangeText={(text) => onChangeSearchStr(text)}
             />
-            <TouchableOpacity style={styles.searchButton} onPress={onSearch}>
+            <TouchableOpacity style={buttonStyle} onPress={handleSearch}>
                 <Image style={styles.searchIcon} source={require('../assets/search.png')}/>
             </TouchableOpacity>
         </View>
@@ -51,8 +69,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
     },
+    searchButtonError: {
+        backgroundColor: '#c2255c', // цвет для ошибки
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+    },
     searchIcon: {
-        display: 'block',
+        display: 'flex',
         width: 30,
         height: 30,
     },

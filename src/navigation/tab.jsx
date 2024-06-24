@@ -38,7 +38,7 @@ const TabBar = () => {
                     tabBarActiveTintColor: "#c2255c",
                     tabBarIcon: ({focused}) => (<SimpleLineIcons name="settings" size={24} color={focused ? '#c2255c' : 'black'}/>),
                 }}
-                name="setAccount"
+                name="SetAccount"
                 component={SettingsDrawerNavigation} />
         </Tab.Navigator>
     );

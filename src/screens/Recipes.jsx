@@ -1,5 +1,6 @@
 import {
   FlatList,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -164,6 +165,14 @@ const styles = StyleSheet.create({
     flex: 1,
     // цвет фона
     backgroundColor: "#fff",
+    ...Platform.select({
+      android: {
+        paddingTop: 30,
+      },
+      default: {
+        paddingTop: 10,
+      }
+    })
   },
   categoryTitle: {
     // размер шрифта

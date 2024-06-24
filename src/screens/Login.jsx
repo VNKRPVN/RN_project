@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useContext, useState, useDebugValue } from "react";
-import { AccountContext } from "../../App";
+import { AccountContext } from "../data/accountContext";
 import { accounts } from "../data/accounts";
 import { Feather } from "@expo/vector-icons";
 
@@ -35,7 +35,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const { setAccount } = useContext(AccountContext);
+  const { SetAccount } = useContext(AccountContext);
   const handleSubmit = async () => {
     setStatus("checking");
     setTimeout(async () => {
@@ -44,7 +44,7 @@ const Login = () => {
       );
       if (accountInList && accountInList.password === inputData.password) {
         setStatus("empty");
-        setAccount(accountInList);
+        SetAccount(accountInList);
       } else {
         setStatus("error");
       }

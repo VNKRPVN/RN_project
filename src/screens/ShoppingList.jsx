@@ -3,10 +3,11 @@ import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
-  AsyncStorage,
+  Platform,
 } from "react-native";
 import FoodInput from "../components/FoodInput";
 import FoodNote from "../components/FoodNote";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ShoppingList = () => {
   const [foodList, setFoodList] = useState([]);
@@ -68,8 +69,18 @@ const ShoppingList = () => {
 
 const styles = StyleSheet.create({
   container: {
+    // делаем контейнер flex-контейнером
     flex: 1,
+    // цвет фона
     backgroundColor: "#fff",
+    ...Platform.select({
+      android: {
+        paddingTop: 30,
+      },
+      default: {
+        paddingTop: 10,
+      }
+    })
   },
 });
 
